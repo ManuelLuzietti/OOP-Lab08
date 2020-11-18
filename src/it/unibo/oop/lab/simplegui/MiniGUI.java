@@ -4,12 +4,16 @@
 package it.unibo.oop.lab.simplegui;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -79,6 +83,26 @@ public class MiniGUI {
      */
     public static void main(final String... args) {
        new MiniGUI().display();
+       JPanel panel2 = new JPanel();
+       BoxLayout lay = new BoxLayout(panel2, BoxLayout.X_AXIS);
+       panel2.setLayout(lay);
+       JPanel panel1 = new JPanel();
+       BorderLayout e = new BorderLayout();
+       panel1.setLayout(e);
+       e.addLayoutComponent(panel1, BorderLayout.CENTER);
+       JButton button1 = new JButton("button1");
+       panel1.add(button1);
+       JFrame frame = new JFrame();
+       final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+       int sw = (int) screen.getWidth();
+       int sh = (int) screen.getHeight();
+       frame.setSize(sw / PROPORTION, sh / PROPORTION);
+       panel2.add(panel1);
+       JButton button2 = new JButton("hey");
+       panel2.add(button2);
+       frame.getContentPane().add(panel2);
+       //frame.getContentPane().add(panel1);
+       frame.setVisible(true);
     }
 
 }
