@@ -8,6 +8,7 @@ import java.awt.Button;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,19 +39,38 @@ public class MiniGUI {
     public MiniGUI() {
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
-        final JButton write = new JButton("Print a random number on standard output");
-        canvas.add(write, BorderLayout.CENTER);
+        //es1
+        JPanel panel1 = new JPanel();
+        LayoutManager box = new BoxLayout(panel1, BoxLayout.LINE_AXIS);
+        panel1.setLayout(box);
+        canvas.add(panel1, BorderLayout.CENTER);
+        JButton button1 = new JButton("Button1");
+        panel1.add(button1);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        /*
-         * Handlers
-         */
-        write.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                System.out.println(rng.nextInt());
-            }
-        });
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        final JButton write = new JButton("Print a random number on standard output");
+//        canvas.add(write, BorderLayout.CENTER);
+//        frame.setContentPane(canvas);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        /*
+//         * Handlers
+//         */
+//        write.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(final ActionEvent e) {
+//                System.out.println(rng.nextInt());
+//            }
+//        });
     }
 
     private void display() {
@@ -83,26 +103,26 @@ public class MiniGUI {
      */
     public static void main(final String... args) {
        new MiniGUI().display();
-       JPanel panel2 = new JPanel();
-       BoxLayout lay = new BoxLayout(panel2, BoxLayout.X_AXIS);
-       panel2.setLayout(lay);
-       JPanel panel1 = new JPanel();
-       BorderLayout e = new BorderLayout();
-       panel1.setLayout(e);
-       e.addLayoutComponent(panel1, BorderLayout.CENTER);
-       JButton button1 = new JButton("button1");
-       panel1.add(button1);
-       JFrame frame = new JFrame();
-       final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-       int sw = (int) screen.getWidth();
-       int sh = (int) screen.getHeight();
-       frame.setSize(sw / PROPORTION, sh / PROPORTION);
-       panel2.add(panel1);
-       JButton button2 = new JButton("hey");
-       panel2.add(button2);
-       frame.getContentPane().add(panel2);
-       //frame.getContentPane().add(panel1);
-       frame.setVisible(true);
+//       JPanel panel2 = new JPanel();
+//       BoxLayout lay = new BoxLayout(panel2, BoxLayout.X_AXIS);
+//       panel2.setLayout(lay);
+//       JPanel panel1 = new JPanel();
+//       BorderLayout e = new BorderLayout();
+//       panel1.setLayout(e);
+//       e.addLayoutComponent(panel1, BorderLayout.CENTER);
+//       JButton button1 = new JButton("button1");
+//       panel1.add(button1);
+//       JFrame frame = new JFrame();
+//       final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+//       int sw = (int) screen.getWidth();
+//       int sh = (int) screen.getHeight();
+//       frame.setSize(sw / PROPORTION, sh / PROPORTION);
+//       panel2.add(panel1);
+//       JButton button2 = new JButton("hey");
+//       panel2.add(button2);
+//       frame.getContentPane().add(panel2);
+//       //frame.getContentPane().add(panel1);
+//       frame.setVisible(true);
     }
 
 }
