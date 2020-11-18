@@ -18,6 +18,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  * This class is a simple application that writes a random number on a file.
@@ -46,30 +48,36 @@ public class MiniGUI {
         canvas.add(panel1, BorderLayout.CENTER);
         JButton button1 = new JButton("Button1");
         panel1.add(button1);
+        
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-//        final JButton write = new JButton("Print a random number on standard output");
-//        canvas.add(write, BorderLayout.CENTER);
-//        frame.setContentPane(canvas);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        /*
-//         * Handlers
-//         */
-//        write.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(final ActionEvent e) {
-//                System.out.println(rng.nextInt());
-//            }
+        JTextArea result = new JTextArea();
+        canvas.add(result, BorderLayout.NORTH);
+        button1.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                int output = rng.nextInt();
+                //System.out.println(output);
+                result.insert(output + "", 0);
+                
+                
+            }
+        });
+           
+        //final JButton write = new JButton("Print a random number on standard output");
+        //        canvas.add(write, BorderLayout.CENTER);
+        //        frame.setContentPane(canvas);
+        //        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //        /*
+        //         * Handlers
+        //         */
+        //        write.addActionListener(new ActionListener() {
+        //            @Override
+        //            public void actionPerformed(final ActionEvent e) {
+        //                System.out.println(rng.nextInt());
+        //            }
 //        });
     }
 
@@ -95,6 +103,7 @@ public class MiniGUI {
         /*
          * OK, ready to pull the frame onscreen
          */
+        frame.pack();
         frame.setVisible(true);
     }
 
