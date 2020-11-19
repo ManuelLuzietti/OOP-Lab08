@@ -5,8 +5,10 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -102,13 +104,20 @@ public class BadIOGUI {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                String output =  rng.nextInt() + " " + System.getProperty("line.separator");
+                String output =  rng.nextInt() + " ";
                 text.setText(output);
                 try (PrintStream s = new PrintStream(f1)) {
                     s.append(output);
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 } 
+//                DataOutputStream str ;
+//                try {
+//                    str = new DataOutputStream(new FileOutputStream(f1));
+//                    str.writeChar(81);
+//                } catch (IOException el) {
+//                    el.getStackTrace();
+//                } 
             }
         });
         button2.addActionListener(new ActionListener() {
@@ -116,12 +125,20 @@ public class BadIOGUI {
             @Override
             public void actionPerformed(final ActionEvent arg0) {
                 String s;
+//                //                try {
+//                //                    s = Files.readString(f1.toPath());
+//                //                    System.out.println(s);
+//                //                } catch (IOException e) {
+//                //                    e.printStackTrace();
+//                //                }
+                DataInputStream se;
                 try {
-                    s = Files.readString(f1.toPath());
-                    System.out.println(s);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    se = new DataInputStream(new FileInputStream(f1));
+                    System.out.println(se.readLine());
+                    se.close();
+                } catch(IOException e) {
+                    e.getStackTrace();
+                } 
             }
         });
     }
