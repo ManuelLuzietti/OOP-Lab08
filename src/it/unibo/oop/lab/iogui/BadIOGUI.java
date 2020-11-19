@@ -5,25 +5,21 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Random;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.nio.file.Files;
 
 /**
  * This class is a simple application that writes a random number on a file.
@@ -41,38 +37,39 @@ public class BadIOGUI {
     private static final int PROPORTION = 5;
     private final Random rng = new Random();
     private final JFrame frame = new JFrame(TITLE);
+    private final File f1 = new File(PATH);
     /**
      * 
      */
-//    public BadIOGUI() {
-//        final JPanel canvas = new JPanel();
-//        canvas.setLayout(new BorderLayout());
-//        final JButton write = new JButton("Write on file");
-//        canvas.add(write, BorderLayout.CENTER);
-//        frame.setContentPane(canvas);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        /*
-//         * Handlers
-//         */
-//        write.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(final ActionEvent e) {
-//                /*
-//                 * This would be VERY BAD in a real application.
-//                 * 
-//                 * This makes the Event Dispatch Thread (EDT) work on an I/O
-//                 * operation. I/O operations may take a long time, during which
-//                 * your UI becomes completely unresponsive.
-//                 */
-//                try (PrintStream ps = new PrintStream(PATH)) {
-//                    ps.print(rng.nextInt());
-//                } catch (FileNotFoundException e1) {
-//                    JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
-//                    e1.printStackTrace();
-//                }
-//            }
-//        });
-//    }
+    //    public BadIOGUI() {
+    //        final JPanel canvas = new JPanel();
+    //        canvas.setLayout(new BorderLayout());
+    //        final JButton write = new JButton("Write on file");
+    //        canvas.add(write, BorderLayout.CENTER);
+    //        frame.setContentPane(canvas);
+    //        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    //        /*
+    //         * Handlers
+    //         */
+    //        write.addActionListener(new ActionListener() {
+    //            @Override
+    //            public void actionPerformed(final ActionEvent e) {
+    //                /*
+    //                 * This would be VERY BAD in a real application.
+    //                 * 
+    //                 * This makes the Event Dispatch Thread (EDT) work on an I/O
+    //                 * operation. I/O operations may take a long time, during which
+    //                 * your UI becomes completely unresponsive.
+    //                 */
+    //                try (PrintStream ps = new PrintStream(PATH)) {
+    //                    ps.print(rng.nextInt());
+    //                } catch (FileNotFoundException e1) {
+    //                    JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
+    //                    e1.printStackTrace();
+    //                }
+    //            }
+    //        });
+    //    }
     public BadIOGUI() {
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
@@ -91,7 +88,6 @@ public class BadIOGUI {
         /*
          * setto stesso file di lettura scrittura di read write
          */
-        File f1 = new File("ciao.txt"); 
         if (!f1.exists()) {
             try {
                 f1.createNewFile();
@@ -106,28 +102,25 @@ public class BadIOGUI {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                String output =  rng.nextInt() + " ";
-                //System.out.println(output);
-                try( DataOutputStream strOut  = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(f1)));
-) {
-                    strOut.writeChars(output);
-                    strOut.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
+                String output =  rng.nextInt() + " " + System.getProperty("line.separator");
                 text.setText(output);
+                try (PrintStream s = new PrintStream(f1)) {
+                    s.append(output);
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                } 
             }
         });
         button2.addActionListener(new ActionListener() {
+
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                System.out.println("Pulsante Read premuto!");
+            public void actionPerformed(final ActionEvent arg0) {
+                String s;
                 try {
-                    DataInputStream strIn = new DataInputStream(new BufferedInputStream(new FileInputStream(f1)));
-                    System.out.println(strIn.readLine());
-                    strIn.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+                    s = Files.readString(f1.toPath());
+                    System.out.println(s);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -163,6 +156,6 @@ public class BadIOGUI {
      * @param args ignored
      */
     public static void main(final String... args) {
-       new BadIOGUI().display();
+        new BadIOGUI().display();
     }
 }
