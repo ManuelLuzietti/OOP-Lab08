@@ -5,14 +5,25 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Random;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * This class is a simple application that writes a random number on a file.
@@ -30,34 +41,92 @@ public class BadIOGUI {
     private static final int PROPORTION = 5;
     private final Random rng = new Random();
     private final JFrame frame = new JFrame(TITLE);
-
     /**
      * 
      */
+//    public BadIOGUI() {
+//        final JPanel canvas = new JPanel();
+//        canvas.setLayout(new BorderLayout());
+//        final JButton write = new JButton("Write on file");
+//        canvas.add(write, BorderLayout.CENTER);
+//        frame.setContentPane(canvas);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        /*
+//         * Handlers
+//         */
+//        write.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(final ActionEvent e) {
+//                /*
+//                 * This would be VERY BAD in a real application.
+//                 * 
+//                 * This makes the Event Dispatch Thread (EDT) work on an I/O
+//                 * operation. I/O operations may take a long time, during which
+//                 * your UI becomes completely unresponsive.
+//                 */
+//                try (PrintStream ps = new PrintStream(PATH)) {
+//                    ps.print(rng.nextInt());
+//                } catch (FileNotFoundException e1) {
+//                    JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
+//                    e1.printStackTrace();
+//                }
+//            }
+//        });
+//    }
     public BadIOGUI() {
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
-        final JButton write = new JButton("Write on file");
-        canvas.add(write, BorderLayout.CENTER);
+        JPanel panel1 = new JPanel();
+        BoxLayout box = new BoxLayout(panel1, BoxLayout.LINE_AXIS);
+        panel1.setLayout(box);
+        canvas.add(panel1, BorderLayout.CENTER);
+        JButton button1 = new JButton("Write");
+        panel1.add(button1);
+        JTextField text = new JTextField();
+        canvas.add(text, BorderLayout.NORTH);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JButton button2 = new JButton("Read");
+        panel1.add(button2);
         /*
-         * Handlers
+         * setto stesso file di lettura scrittura di read write
          */
-        write.addActionListener(new ActionListener() {
+        File f1 = new File("ciao.txt"); 
+        if (!f1.exists()) {
+            try {
+                f1.createNewFile();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+        /*
+         * Handlers:
+         */
+
+        button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                /*
-                 * This would be VERY BAD in a real application.
-                 * 
-                 * This makes the Event Dispatch Thread (EDT) work on an I/O
-                 * operation. I/O operations may take a long time, during which
-                 * your UI becomes completely unresponsive.
-                 */
-                try (PrintStream ps = new PrintStream(PATH)) {
-                    ps.print(rng.nextInt());
-                } catch (FileNotFoundException e1) {
-                    JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
+                String output =  rng.nextInt() + " ";
+                //System.out.println(output);
+                try( DataOutputStream strOut  = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(f1)));
+) {
+                    strOut.writeChars(output);
+                    strOut.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                text.setText(output);
+            }
+        });
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                System.out.println("Pulsante Read premuto!");
+                try {
+                    DataInputStream strIn = new DataInputStream(new BufferedInputStream(new FileInputStream(f1)));
+                    System.out.println(strIn.readLine());
+                    strIn.close();
+                } catch (IOException e1) {
                     e1.printStackTrace();
                 }
             }
@@ -86,6 +155,7 @@ public class BadIOGUI {
         /*
          * OK, ready to pull the frame onscreen
          */
+        frame.pack();
         frame.setVisible(true);
     }
 
