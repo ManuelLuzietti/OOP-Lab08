@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.file.*;
 
 
 /**
@@ -47,15 +46,13 @@ public class Controller {
         }
         this.file = defaultFile;
     }
-    
-    
-    public Controller(String path)   {
+    public Controller(final String path)   {
         try {
             setFile(path);
         } catch (FileNotFoundException e) {
             e.getMessage();
             this.file = new File(System.getProperty("user.home") + System.getProperty("line.separator") + "output.txt");
-            if(!this.file.exists()) {
+            if (!this.file.exists()) {
                 try {
                     this.file.createNewFile();
                 } catch (IOException e1) {
@@ -68,7 +65,7 @@ public class Controller {
      * 
      * @param path as string 
      */
-    public void setFile(final String path) throws FileNotFoundException{
+    public final void setFile(final String path) throws FileNotFoundException{
         File newFile = new File(path);
         if (newFile.exists()) {
             this.file = newFile;

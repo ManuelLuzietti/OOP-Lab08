@@ -3,6 +3,6 @@
     <useProjectRuleSet>true</useProjectRuleSet>
     <ruleSetFile>/home/lux/Scrivania/labOOP/lab08/config/pmd/pmd.xml</ruleSetFile>
     <includeDerivedFiles>false</includeDerivedFiles>
-    <violationsAsErrors>true</violationsAsErrors>
+    <violationsAsErrors>false</violationsAsErrors>
     <fullBuildEnabled>true</fullBuildEnabled>
 </pmd>

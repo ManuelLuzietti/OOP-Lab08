@@ -1,5 +1,5 @@
 #SpotBugs User Preferences
-#Fri Oct 30 11:59:51 CET 2020
+#Fri Nov 20 21:16:51 CET 2020
 detectorExplicitSerialization=ExplicitSerialization|true
 detectorMultithreadedInstanceAccess=MultithreadedInstanceAccess|true
 detectorConfusionBetweenInheritedAndOuterMethod=ConfusionBetweenInheritedAndOuterMethod|true
@@ -112,7 +112,7 @@ detectorOptionalReturnNull=OptionalReturnNull|true
 detectorStartInConstructor=StartInConstructor|true
 detectorFindUnsatisfiedObligation=FindUnsatisfiedObligation|true
 detectorRedundantConditions=RedundantConditions|true
-effort=max
+effort=default
 detectorRedundantInterfaces=RedundantInterfaces|true
 detectorDuplicateBranches=DuplicateBranches|true
 detectorCheckTypeQualifiers=CheckTypeQualifiers|true
