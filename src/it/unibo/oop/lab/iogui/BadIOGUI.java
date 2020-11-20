@@ -111,13 +111,13 @@ public class BadIOGUI {
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 } 
-//                DataOutputStream str ;
-//                try {
-//                    str = new DataOutputStream(new FileOutputStream(f1));
-//                    str.writeChar(81);
-//                } catch (IOException el) {
-//                    el.getStackTrace();
-//                } 
+                //                DataOutputStream str ;
+                //                try {
+                //                    str = new DataOutputStream(new FileOutputStream(f1));
+                //                    str.writeChar(81);
+                //                } catch (IOException el) {
+                //                    el.getStackTrace();
+                //                } 
             }
         });
         button2.addActionListener(new ActionListener() {
@@ -125,12 +125,12 @@ public class BadIOGUI {
             @Override
             public void actionPerformed(final ActionEvent arg0) {
                 String s;
-//                //                try {
-//                //                    s = Files.readString(f1.toPath());
-//                //                    System.out.println(s);
-//                //                } catch (IOException e) {
-//                //                    e.printStackTrace();
-//                //                }
+                //                try {
+                //                    s = Files.readString(f1.toPath());
+                //                    System.out.println(s);
+                //                } catch (IOException e) {
+                //                    e.printStackTrace();
+                //                }
                 DataInputStream se;
                 try {
                     se = new DataInputStream(new FileInputStream(f1));
