@@ -108,18 +108,17 @@ public class BadIOGUI {
             public void actionPerformed(final ActionEvent e) {
                 String output =  rng.nextInt() + " ";
                 text.setText(output);
-                try (PrintStream s = new PrintStream(f1)) {
-                    s.append(output);
-                } catch (FileNotFoundException e1) {
-                    e1.printStackTrace();
-                } 
-                //                DataOutputStream str ;
-                //                try {
-                //                    str = new DataOutputStream(new FileOutputStream(f1));
-                //                    str.writeChar(81);
-                //                } catch (IOException el) {
-                //                    el.getStackTrace();
+//                try (PrintStream s = new PrintStream(f1)) {
+//                    s.append(output);
+//                } catch (FileNotFoundException e1) {
+                //                    e1.printStackTrace();
                 //                } 
+                try (DataOutputStream str = new DataOutputStream(new FileOutputStream(f1))) {
+                     str.writeBytes(output);
+                     //perchè diavolo writeBytes funziona e writeChars no!?
+                } catch (IOException el) {
+                    el.getStackTrace();
+                } 
             }
         });
         button2.addActionListener(new ActionListener() {
