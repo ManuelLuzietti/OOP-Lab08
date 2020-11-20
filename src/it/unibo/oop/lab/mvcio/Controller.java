@@ -36,7 +36,8 @@ public class Controller {
      * to a software that runs correctly on every platform.
      */
     public Controller() {
-        File defaultFile = new File(System.getProperty("user.home") + System.getProperty("line.separator") + "output.txt");
+        File defaultFile = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "output.txt");
+        //File defaultFile = new File("ciao.txt");
         if (!defaultFile.exists()) {
             try {
                 defaultFile.createNewFile();
@@ -48,8 +49,20 @@ public class Controller {
     }
     
     
-    public Controller(String path) throws FileNotFoundException  {
-        setFile(path);
+    public Controller(String path)   {
+        try {
+            setFile(path);
+        } catch (FileNotFoundException e) {
+            e.getMessage();
+            this.file = new File(System.getProperty("user.home") + System.getProperty("line.separator") + "output.txt");
+            if(!this.file.exists()) {
+                try {
+                    this.file.createNewFile();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
     }
     /**
      * 

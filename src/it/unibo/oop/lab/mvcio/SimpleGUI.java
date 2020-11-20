@@ -7,12 +7,17 @@ import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
+
+import it.unibo.oop.lab.mvcio.Controller.FileNotSettedException;
 
 /**
  * A very simple program using a graphical interface.
@@ -21,7 +26,7 @@ import javax.swing.border.Border;
 public final class SimpleGUI {
 
     private final JFrame frame = new JFrame();
-
+    private final Controller controller;
     /*
      * Once the Controller is done, implement this class in such a way that:
      * 
@@ -45,7 +50,31 @@ public final class SimpleGUI {
     /**
      * builds a new {@link SimpleGUI}.
      */
-    public SimpleGUI() {
+    public SimpleGUI(Controller c) {
+        this.controller = c;
+        JTextArea textArea = new JTextArea();
+        JButton saveButton = new JButton("Save");
+        JPanel canvas = new JPanel(new BorderLayout());
+        
+        frame.setContentPane(canvas);
+        canvas.add(textArea, BorderLayout.CENTER);
+        canvas.add(saveButton, BorderLayout.SOUTH);
+        
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        /*
+         * handlers
+         */
+        saveButton.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    controller.write(textArea.getText());
+                } catch (IOException | FileNotSettedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         /*
          * Make the frame half the resolution of the screen. This very method is
          * enough for a single screen setup. In case of multiple monitors, the
@@ -66,26 +95,12 @@ public final class SimpleGUI {
          * on screen. Results may vary, but it is generally the best choice.
          */
         frame.setLocationByPlatform(true);
-        
-        JTextArea textArea = new JTextArea(10,30);
-        JButton saveButton = new JButton();
-        JPanel canvas = new JPanel(new BorderLayout());
-        
-        frame.setContentPane(canvas);
-        canvas.add(textArea, BorderLayout.CENTER);
-        canvas.add(saveButton, BorderLayout.PAGE_END);
-        canvas.setBounds(new Rectangle(canvas.getPreferredSize()));
-        textArea.setBounds(50,50,textArea.getPreferredSize().width,textArea.getPreferredSize().height);
-        saveButton.setSize(saveButton.getPreferredSize());
-        
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        
         
         
     }
 
     public final static void main(String...strings ) {
-        new SimpleGUI();
+        new SimpleGUI(new Controller());
     }
 }

@@ -122,6 +122,7 @@ public class BadIOGUI {
         });
         button2.addActionListener(new ActionListener() {
 
+            @SuppressWarnings("deprecation")
             @Override
             public void actionPerformed(final ActionEvent arg0) {
                 String s;
@@ -136,9 +137,12 @@ public class BadIOGUI {
                     se = new DataInputStream(new FileInputStream(f1));
                     System.out.println(se.readLine());
                     se.close();
-                } catch(IOException e) {
-                    e.getStackTrace();
-                } 
+                } catch (FileNotFoundException e2) {
+                    e2.getMessage();
+                    e2.getStackTrace();
+                } catch (IOException e3) {
+                    e3.getMessage();
+                }
             }
         });
     }
