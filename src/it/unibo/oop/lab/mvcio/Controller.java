@@ -51,7 +51,7 @@ public class Controller {
             setFile(path);
         } catch (FileNotFoundException e) {
             e.getMessage();
-            this.file = new File(System.getProperty("user.home") + System.getProperty("line.separator") + "output.txt");
+            this.file = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "output.txt");
             if (!this.file.exists()) {
                 try {
                     this.file.createNewFile();
@@ -81,7 +81,7 @@ public class Controller {
         return this.file;
     }
 
-    class FileNotSettedException extends Exception { 
+    public class FileNotSettedException extends Exception { 
         private static final long serialVersionUID = 1L;
 
         public String getMessage() {

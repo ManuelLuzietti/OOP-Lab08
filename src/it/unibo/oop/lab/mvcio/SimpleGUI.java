@@ -49,25 +49,23 @@ public final class SimpleGUI {
 
     /**
      * builds a new {@link SimpleGUI}.
+     * @param c Controller object
      */
-    public SimpleGUI(Controller c) {
+    public SimpleGUI(final Controller c) {
         this.controller = c;
         JTextArea textArea = new JTextArea();
         JButton saveButton = new JButton("Save");
         JPanel canvas = new JPanel(new BorderLayout());
-        
         frame.setContentPane(canvas);
         canvas.add(textArea, BorderLayout.CENTER);
         canvas.add(saveButton, BorderLayout.SOUTH);
-        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
          * handlers
          */
         saveButton.addActionListener(new ActionListener() {
-            
             @Override
-            public void actionPerformed(ActionEvent arg0) {
+            public void actionPerformed(final ActionEvent arg0) {
                 try {
                     controller.write(textArea.getText());
                 } catch (IOException | FileNotSettedException e) {
@@ -96,11 +94,9 @@ public final class SimpleGUI {
          */
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
-        
-        
-    }
+        }
 
-    public final static void main(String...strings ) {
+    public static void main(final String...strings) {
         new SimpleGUI(new Controller());
     }
 }
