@@ -21,6 +21,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+
 import java.nio.file.Files;
 
 /**
@@ -125,7 +127,7 @@ public class BadIOGUI {
             @SuppressWarnings("deprecation")
             @Override
             public void actionPerformed(final ActionEvent arg0) {
-                String s;
+               // String s;
                 //                try {
                 //                    s = Files.readString(f1.toPath());
                 //                    System.out.println(s);
@@ -137,16 +139,16 @@ public class BadIOGUI {
                     se = new DataInputStream(new FileInputStream(f1));
                     System.out.println(se.readLine());
                     se.close();
-                } catch (FileNotFoundException e2) {
-                    e2.getMessage();
-                    e2.getStackTrace();
-                } catch (IOException e3) {
-                    e3.getMessage();
+                } catch(FileNotFoundException g) {
+                    g.printStackTrace();
+                } catch (IOException p) {
+                    // TODO Auto-generated catch block
+                    p.printStackTrace();
                 }
             }
         });
     }
-
+    
     private void display() {
         /*
          * Make the frame one fifth the resolution of the screen. This very method is
